@@ -31,6 +31,8 @@ def isoformat(value):
 
 
 def to_int(s):
+    if not s:
+        return None
     try:
         return int(s)
     except ValueError:

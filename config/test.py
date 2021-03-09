@@ -35,6 +35,6 @@ INDEX_HTML = 'tests/static/test-index.html'
 
 LOGGING_LOCATION = 'STDOUT'
 
-SQLALCHEMY_DATABASE_URI = f"postgres://squiggy:squiggy@localhost:{os.getenv('PGPORT', '5432')}/squiggy_test"
+SQLALCHEMY_DATABASE_URI = f"postgres://squiggy:squiggy@localhost:{os.getenv('PGPORT', '5432')}/squiggy"
 
 TESTING = True
