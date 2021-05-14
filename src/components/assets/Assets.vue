@@ -74,17 +74,7 @@ export default {
   },
   methods: {
     fetch($state) {
-      this.nextPage().then(data => {
-        if (data.results.length) {
-          $state.loaded()
-          this.$announcer.polite(`${this.assets.length} of ${this.totalAssetCount} assets loaded.`)
-        } else {
-          $state.complete()
-          this.isComplete = true
-          this.$announcer.polite(`All ${this.totalAssetCount} assets have loaded.`)
-        }
-        this.resizeIFrame()
-      })
+      this.nextPage().then(($state, data) => this.handleSubsequentResults)
     },
     getSkeletons: count => Array.from(new Array(count), () => ({isLoading: true})),
     handleResults(data) {
@@ -101,6 +91,22 @@ export default {
       }
       const srAlert = `${this.isReturning ? 'Returning to Asset Library. ' : ''}${this.totalAssetCount} assets total.`
       this.$announcer.polite(srAlert)
+      this.handleSubsequentResults(null, data)
+    },
+    handleSubsequentResults($state, data) {
+      if (!data.results.length || this.assets.length === this.totalAssetCount) {
+        if ($state) {
+          $state.complete()
+        }
+        this.isComplete = true
+        this.$announcer.polite(`All ${this.totalAssetCount} assets have loaded.`)
+      } else {
+        if ($state) {
+          $state.loaded()
+        }
+        this.$announcer.polite(`${this.assets.length} of ${this.totalAssetCount} assets loaded.`)
+      }
+      this.resizeIFrame()
     }
   }
 }

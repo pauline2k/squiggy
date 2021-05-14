@@ -58,7 +58,12 @@ const getters = {
 }
 
 const mutations = {
-  addAssets: (state: any, assets: any[]) => state.assets.push(...assets.reverse()),
+  addAssets: (state: any, assets: any[]) => {
+    if (!state.assets) {
+      state.assets = []
+    }
+    state.assets.push(...assets.reverse())
+  },
   setAssets: (state: any, assets: any[]) => state.assets = assets,
   setAssetType: (state: any, assetType: string) => {
     state.assetType = assetType
